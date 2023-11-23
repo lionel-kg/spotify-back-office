@@ -1,0 +1,8 @@
+.header{
+    background-color: #1db954; /* Spotify green */
+    color: #fff;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto 5fr; /* Left-aligned navbar and flexible main content */
+    align-items: center;
+}
