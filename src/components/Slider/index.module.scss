@@ -1,0 +1,17 @@
+// components/EmblaSlider.module.scss
+
+.slider{
+    &_content{
+        display: grid;
+    }
+    
+    &_container{
+        h2{
+            margin-bottom: 10px;
+        }
+        
+        .slide_img{
+            width: 100%;
+        }
+    }
+}

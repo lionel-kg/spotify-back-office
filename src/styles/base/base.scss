@@ -1,7 +1,14 @@
+@import "../helpers/variables.scss";
+
 .main {
     display: grid;
     grid-template-columns: auto 1fr; /* Repeat this line for a consistent layout with the header */
     background-color: black;
     padding: 7.5px;
+    color: $white;
+}
+
+.slick-track{
+    margin-left: 0 !important;
 }
 
