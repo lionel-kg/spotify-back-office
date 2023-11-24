@@ -3,7 +3,7 @@ import styles from "./index.module.scss";
 import Image from "next/image";
 import NavbarItem from "../NavbarItem";
 import Button from "../Button";
-
+import Logo from '../../../public/img/logo.png'
 //Icons
 import { BiAlbum,BiSearchAlt, BiSolidPlaylist } from "react-icons/bi";
 import { RiFileMusicLine } from "react-icons/ri";
@@ -15,7 +15,7 @@ const Index = () => {
         <div className={styles.navbar}>
             <nav>
                 <div class="img_logo">
-                    <Image src="/img/logo.png" alt="logo"  width={200} height={60}/>
+                    <Image src={Logo} alt="logo"  width={175} height={55}/>
                 </div>
                 <ul>
                     <NavbarItem link="./" title="Tableau de bord" icon={<RxDashboard size={30}/>}/>
