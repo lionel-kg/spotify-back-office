@@ -1,9 +1,9 @@
 // import React from 'react';
-
+import PageTitle from "../../components/PageTitle";
 const Index = () => {
   return (
     <div>
-      <p>Test</p>
+      <PageTitle title="Musiques"/>
     </div>
   );
 }

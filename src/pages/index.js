@@ -1,10 +1,13 @@
 import React from "react"
+import PageTitle from "../components/PageTitle";
 
 export default function Home(){
 
     return (
-        <>
-            <p>Hoqsdme</p>
-        </>
+       
+        <div className="">
+            <PageTitle title="Tableau de bord" />
+        </div>
+      
     )
 }

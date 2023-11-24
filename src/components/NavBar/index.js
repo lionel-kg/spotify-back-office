@@ -1,18 +1,34 @@
 import React from "react";
 import styles from "./index.module.scss";
 import Image from "next/image";
+import NavbarItem from "../NavbarItem";
+import Button from "../Button";
+
+//Icons
+import { BiAlbum,BiSearchAlt, BiSolidPlaylist } from "react-icons/bi";
+import { RiFileMusicLine } from "react-icons/ri";
+import { RxDashboard } from "react-icons/rx";
+import { BsFileEarmarkPerson } from "react-icons/bs";
+
 const Index = () => {
     return ( 
-        <div class={styles.header}>
+        <div className={styles.navbar}>
             <nav>
                 <div class="img_logo">
                     <Image src="/img/logo.png" alt="logo"  width={200} height={60}/>
                 </div>
                 <ul>
-                    <li>Dashboardsssssssssssssss</li>
-                    <li>Playlists</li>
-                    <li>Customer</li>
+                    <NavbarItem link="./" title="Tableau de bord" icon={<RxDashboard size={30}/>}/>
+                    <NavbarItem link="/search" title="Recherche" icon={<BiSearchAlt size={30}/>}/>
+                    <NavbarItem link="/song" title="Musiques" icon={<RiFileMusicLine size={30}/>}/>
+                    <NavbarItem link="/album" title="Albums" icon={<BiAlbum size={30}/>}/>
+                    <NavbarItem link="/playlist" title="Playlists" icon={<BiSolidPlaylist size={30}/>}/>
+                    <NavbarItem link="/artist" title="Artistes" icon={<BsFileEarmarkPerson size={30}/>}/>
                 </ul>
+                <Button
+                    title="Ajouter une musique"
+                    classNameName="btn_primary"
+                />
             </nav>
         </div>
     );
