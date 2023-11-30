@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 import PageTitle from "../../components/PageTitle";
 import fakeData from '../fakeData';
 import ListDnD from "../../components/ListDnD";

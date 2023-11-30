@@ -1,0 +1,43 @@
+@import '../../styles/helpers/variables';
+
+.spinner {
+    position: absolute;
+    left: 50%;
+    margin-top: 100px;
+    transform: translate(-50%, -50%);
+    border: 3px solid $black;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border-left-color: $primary-color;
+    animation: spin .8s linear infinite; /* Use linear timing function for a constant speed */
+    @keyframes spin {
+        0% {
+        transform: rotate(0deg);
+        }
+        100% {
+        transform: rotate(360deg);
+        }
+    }
+}
+
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    input{
+        width: 50%;
+        padding: .5rem 1rem;
+        border-radius: 10px;
+        color: $black;
+    }
+}
+
+.albums_container{
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);  
+    gap: 50px;
+}

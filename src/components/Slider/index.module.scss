@@ -6,12 +6,21 @@
     }
     
     &_container{
+        background: #121212;
+        padding: 30px 15px;
+        border-radius: 20px;
         h2{
             margin-bottom: 10px;
         }
         
-        .slide_img{
-            width: 100%;
+        .slide{
+            &_item{
+                margin: 0 0 0 10px;
+                &_img{
+                    width: 100%;
+                }
+            }
+           
         }
     }
 }

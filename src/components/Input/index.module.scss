@@ -1,0 +1,13 @@
+@import '../../styles/helpers/variables';
+
+.form_group{
+    display: grid;
+    margin-bottom: 25px;
+    .label{
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    .input{
+        padding: .5rem .75rem;
+    }
+}

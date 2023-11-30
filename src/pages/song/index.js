@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from 'react';
 import PageTitle from "../../components/PageTitle";
-import List from "../../components/List";
 import fakeData from '../fakeData';
+import ListDnD from "../../components/ListDnD";
+
 const Index = () => {
   const items = fakeData.artists.map((item, index) => ({
     id: `item-${index}`,
@@ -9,8 +10,8 @@ const Index = () => {
   }));
   return (
     <div>
-      <PageTitle title="Musiques"/>
-      <List items={items} />
+      <PageTitle title="Sons" />
+      <ListDnD items={items} />
     </div>
   );
 }

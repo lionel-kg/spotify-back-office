@@ -3,12 +3,34 @@
 .main {
     display: grid;
     grid-template-columns: auto 1fr; /* Repeat this line for a consistent layout with the header */
-    background-color: black;
     padding: 7.5px;
-    color: $white;
 }
 
-.slick-track{
-    margin-left: 0 !important;
+main{
+    padding: 25px 200px 25px 25px;
 }
 
+.slick{
+    
+    &-track{
+        margin-left: 0 !important;
+        display: flex !important;
+        gap: 10px;
+    }
+
+    &-next{
+        right: 0 !important;
+        z-index: 9;
+        &::before{
+            font-size: 30px !important;
+        }
+    }
+
+    &-prev{
+        left: 0 !important;
+        z-index: 9;
+        &::before{
+            font-size: 30px !important;
+        }
+    }
+}

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import fakeData from '../fakeData';
 import Slider from '../../components/Slider';
 import PageTitle from "../../components/PageTitle";
+import Card from "../../components/Card";
 import styles from "./index.module.scss";
 
 const Index = () => {
@@ -10,10 +11,11 @@ const Index = () => {
   const [artistData, setArtistData] = useState([]);
   const [songData, setSongData] = useState([]);
   const [albumData, setAlbumData] = useState([]);
+  const [itemsToShow, setItemsToShow] = useState(8);
+  const sliderRef = useRef(null);
 
   useEffect(() => {
     if (input.length > 0) {
-      console.log('Fetching data...');
       setIsLoading(true);
       const artistResults = fakeData.artists.filter((artist) =>
         artist.name.toLowerCase().includes(input.toLowerCase())
@@ -59,18 +61,34 @@ const Index = () => {
       ) : (
         <div className={styles.search_results}>
           {artistData.length > 0 && (
-            <div className={styles.results_artist}>
-              <Slider title="Artistes" items={artistData}/>
+            <div>
+              <h2>Artistes</h2>
+              <div className={styles.search_results_grid}> 
+                {artistData.slice(0, itemsToShow).map((item) => (
+                  <Card 
+                    item={item}
+                  />
+                  ))}
+              </div>
             </div>
           )}
+          {itemsToShow < artistData.length && (
+                <button
+                className={styles.showAllButton}
+                onClick={() => setItemsToShow(artistData.length)}
+                >
+                Show All
+                </button>
+            )}
+
           {songData.length > 0 && (
             <div className={styles.results_song}>
-              <Slider items={songData} title="Musiques" />
+              <Slider items={songData} title="Musiques" initialItemsToShow={8}/>
             </div>
           )}
           {albumData.length > 0 && (
             <div className={styles.results_artist}>
-              <Slider items={albumData} title="Albums" />
+              <Slider items={albumData} title="Albums" initialItemsToShow={8}/>
             </div>
           )}
         </div>

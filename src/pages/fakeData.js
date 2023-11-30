@@ -14,6 +14,48 @@ const fakeData = {
       "album": 1,
       "artist": 1,
       "img": "https://cdns-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Song 1",
+      "album": 1,
+      "artist": 1,
+      "img": "https://cdns-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Song 1",
+      "album": 1,
+      "artist": 1,
+      "img": "https://cdns-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Song 1",
+      "album": 1,
+      "artist": 1,
+      "img": "https://cdns-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Song 1",
+      "album": 1,
+      "artist": 1,
+      "img": "https://cdns-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Song 1",
+      "album": 1,
+      "artist": 1,
+      "img": "https://cdns-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500.jpg"
+    },
+    {
+      "id": 1,
+      "name": "Song 1",
+      "album": 1,
+      "artist": 1,
+      "img": "https://cdns-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500.jpg"
 
     },
     {
