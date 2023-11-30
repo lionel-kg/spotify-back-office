@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Input from "../../../components/Input";
-import PageTitle from "../../../components/PageTitle";
-import Button from "../../../components/Button";
-import styles from "./index.module.scss";
-import axios from "axios";
+import React, {useEffect, useState} from 'react';
+import Input from '../../../components/Input';
+import PageTitle from '../../../components/PageTitle';
+import Button from '../../../components/Button';
+import styles from './index.module.scss';
+import axios from '../../config/axios';
 
 const Index = () => {
-  const [songForm, setSongForm] = useState({ title: "", audioFile: null });
+  const [songForm, setSongForm] = useState({title: '', audioFile: null});
   const [data, setData] = useState({});
   const [artist, setArtist] = useState({});
   const [loadingData, setLoadingData] = useState(true);
@@ -16,29 +16,29 @@ const Index = () => {
   const [album, setAlbum] = useState({});
   const [audio, setAudio] = useState({});
 
-  const handleInput = (e) => {
-    setSongForm({ ...songForm, [e.target.name]: e.target.value });
+  const handleInput = e => {
+    setSongForm({...songForm, [e.target.name]: e.target.value});
   };
 
-  const handleFileChange = (e) => {
-    setSongForm({ ...songForm, audioFile: e.target.files[0] });
+  const handleFileChange = e => {
+    setSongForm({...songForm, audioFile: e.target.files[0]});
   };
 
-  const submitSong = async (e) => {
+  const submitSong = async e => {
     e.preventDefault();
 
     try {
       const formData = new FormData();
-      formData.append("file", songForm.audioFile);
+      formData.append('file', songForm.audioFile);
       const response = await axios.post(
-        "http://localhost:4001/audio/upload",
-        formData
+        'http://localhost:4001/audio/upload',
+        formData,
       );
       setData(response.data);
       setLoadingData(false);
       console.log(response.data);
     } catch (error) {
-      console.error("Error uploading audio file:", error);
+      console.error('Error uploading audio file:', error);
     }
   };
 
@@ -51,14 +51,14 @@ const Index = () => {
         };
         try {
           const newArtist = await axios.post(
-            "http://localhost:4001/artist",
-            bodyArtist
+            'http://localhost:4001/artist',
+            bodyArtist,
           );
           console.log(newArtist.data);
           setArtist(newArtist.data);
           setLoadingArtist(false);
         } catch (error) {
-          console.error("Error creating artist:", error);
+          console.error('Error creating artist:', error);
         }
       }
     };
@@ -79,14 +79,14 @@ const Index = () => {
 
         try {
           const newAlbum = await axios.post(
-            "http://localhost:4001/album",
-            bodyAlbum
+            'http://localhost:4001/album',
+            bodyAlbum,
           );
           console.log(newAlbum.data);
           setAlbum(newAlbum.data);
           setLoadingAlbum(false);
         } catch (error) {
-          console.error("Error creating album:", error);
+          console.error('Error creating album:', error);
         }
       }
     };
@@ -101,7 +101,7 @@ const Index = () => {
         loadingArtist,
         album,
         artist,
-        Object.keys(album).length > 0 && Object.keys(artist).length > 0
+        Object.keys(album).length > 0 && Object.keys(artist).length > 0,
       );
 
       if (
@@ -123,14 +123,14 @@ const Index = () => {
         console.log(bodyAudio);
         try {
           const newAudio = await axios.post(
-            "http://localhost:4001/audio",
-            bodyAudio
+            'http://localhost:4001/audio',
+            bodyAudio,
           );
           console.log(newAudio.data);
           setAudio(newAudio.data);
           setLoadingAudio(false);
         } catch (error) {
-          console.error("Error creating audio:", error);
+          console.error('Error creating audio:', error);
         }
       }
     };
