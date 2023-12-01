@@ -23,6 +23,11 @@ export const updateAlbum = async (id, formData) => {
     const response = await axios.put(
       `http://localhost:4001/album/${id}`,
       formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
     return response.data;
   } catch (error) {

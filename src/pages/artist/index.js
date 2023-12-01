@@ -3,7 +3,7 @@ import PageTitle from '../../components/PageTitle';
 import fakeData from '../fakeData';
 import List from '../../components/List';
 import {useEffect} from 'react';
-import axios from '../config/axios';
+import axios from '../../config/axios';
 import {useState} from 'react';
 
 const Index = () => {

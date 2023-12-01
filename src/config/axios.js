@@ -25,19 +25,15 @@ instance.interceptors.response.use(
     return response;
   },
   error => {
-    console.log('test', error);
     if (error.response) {
       // The request was made, but the server responded with a status different from 2xx
       const errorMessage = error.response.data.error || 'An error occurred';
       toast.error(errorMessage);
-      console.log('ttest1');
     } else if (error.request) {
       // The request was made, but no response was received
-      console.log('test2');
       toast.error('No response received from the server');
     } else {
       // An error occurred while setting up the request
-      console.log('test3');
       toast.error('Internal server error');
     }
     return Promise.reject(error);
