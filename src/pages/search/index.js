@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from 'react';
-import fakeData from '../fakeData';
 import Slider from '../../components/Slider';
 import PageTitle from '../../components/PageTitle';
 import Card from '../../components/Card';
@@ -17,24 +16,24 @@ const Index = () => {
   useEffect(() => {
     if (input.length > 0) {
       setIsLoading(true);
-      const artistResults = fakeData.artists.filter(artist =>
-        artist.name.toLowerCase().includes(input.toLowerCase()),
-      );
+      // const artistResults = fakeData.artists.filter(artist =>
+      //   artist.name.toLowerCase().includes(input.toLowerCase()),
+      // );
 
-      const audioResults = fakeData.audios.filter(audio =>
-        audio.name.toLowerCase().includes(input.toLowerCase()),
-      );
+      // const audioResults = fakeData.audios.filter(audio =>
+      //   audio.name.toLowerCase().includes(input.toLowerCase()),
+      // );
 
-      const albumResults = fakeData.albums.filter(album =>
-        album.name.toLowerCase().includes(input.toLowerCase()),
-      );
+      // const albumResults = fakeData.albums.filter(album =>
+      //   album.name.toLowerCase().includes(input.toLowerCase()),
+      // );
 
       // Simulate a delay to mimic an API call
       const delay = setTimeout(() => {
         setIsLoading(false);
-        setArtistData(artistResults);
-        setAudioData(audioResults);
-        setAlbumData(albumResults);
+        // setArtistData(artistResults);
+        // setAudioData(audioResults);
+        // setAlbumData(albumResults);
       }, 300);
 
       return () => clearTimeout(delay);
@@ -46,7 +45,7 @@ const Index = () => {
   };
 
   return (
-    <div class={styles.search}>
+    <div className={styles.search}>
       <PageTitle title="Recherche" />
       <input
         type="text"

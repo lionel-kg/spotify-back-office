@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import styles from './index.module.scss';
 import PageTitle from '../../../components/PageTitle';
 import Button from '../../../components/Button';
-import fakeData from '../../fakeData';
 import Input from '../../../components/Input';
 
 const Index = () => {

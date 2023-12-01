@@ -2,7 +2,7 @@ import axios from '../config/axios';
 
 export const getAlbums = async () => {
   try {
-    const response = await axios.get('http://localhost:4001/album/');
+    const response = await axios.get('/album/');
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export const getAlbums = async () => {
 
 export const getAlbumById = async id => {
   try {
-    const response = await axios.get(`http://localhost:4001/album/${id}`);
+    const response = await axios.get(`/album/${id}`);
     return response.data;
   } catch (error) {
     throw error;
