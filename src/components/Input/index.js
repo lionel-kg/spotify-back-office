@@ -12,6 +12,7 @@ const Index = (props) => {
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
+        ref={props.inputRef}
         required={props.required}
       />
     </div>

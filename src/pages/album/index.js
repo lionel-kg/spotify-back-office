@@ -1,31 +1,57 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from "./index.module.scss";
 import PageTitle from "../../components/PageTitle";
-import fakeData from '../fakeData';
 import Card from "../../components/Card";
+import axios from 'axios'; // Import axios
+import { getAlbums } from '@/services/album.service';
 
 const Index = () => {
-
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [artistData, setArtistData] = useState([]);
-  const items = fakeData.artists;
+  const [filteredAlbums, setFilteredAlbums] = useState([]);
+  const [albums, setAlbums] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4001/album/');
+        setAlbums(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+  useEffect(() => {
+
+    getAlbums().then(res => {
+      setAlbums(res);
+    })
+  }, []);
 
   useEffect(() => {
     if (search.length > 0) {
       setIsLoading(true);
-      const artistResults = fakeData.artists.filter((artist) =>
-        artist.name.toLowerCase().includes(search.toLowerCase())
+
+      const albumResults = albums.filter((album) =>
+        album.title.toLowerCase().includes(search.toLowerCase())
       );
 
       const delay = setTimeout(() => {
         setIsLoading(false);
-        setArtistData(artistResults);
+        setFilteredAlbums(albumResults);
       }, 500);
 
       return () => clearTimeout(delay);
+    } else {
+      // If search is empty, reset the filtered albums and isLoading
+      setIsLoading(false);
+      setFilteredAlbums([]);
     }
-  }, [search]);
+  }, [search, albums]);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -34,43 +60,47 @@ const Index = () => {
   return (
     <div>
       <div className={styles.header}>
-        <PageTitle title="Albums"/>
-        <input placeholder="Rechercher" onChange={(e) => {handleSearch(e);}} />
+        <PageTitle title="Albums" />
+        <input placeholder="Rechercher" onChange={(e) => { handleSearch(e); }} value={search} />
       </div>
       <div className={styles.albums_container}>
         {search ? (
           <>
-          {isLoading ? (
-            <div className={styles.spinner}></div>
-          ) : (
-            <>
-              {artistData.length <= 0 ? (
-                <p>Pas de résultats</p>
-              ) : (
-                <div>
-                  <h2>Artistes</h2>
-                  <div className={styles.search_results_grid}>
-                    {artistData.map((item) => (
+            {isLoading ? (
+              <div className={styles.spinner}></div>
+            ) : (
+              <>
+                {filteredAlbums.length === 0 ? (
+                  <p>Pas de résultats</p>
+                ) : (
+                  <>
+                    {filteredAlbums.map((album) => (
                       <Card
-                        key={item.id} // Add a unique key for each mapped element
-                        item={item}
+                        key={album.id}
+                        name={album.title}
+                        subtitle={album.artist?.name}
+                        onClick={album.onClick}
                       />
                     ))}
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </>
+                  </>
+                )}
+              </>
+            )}
+          </>
         ) : (
           <>
-          {items.map((item) => (
-            <Card item={item} />
-          ))}
+            {albums.map((album) => (
+              <Card
+                key={album.id}
+                name={album.title}
+                subtitle={album.artist?.name}
+                href={`album/update/${album.id}`}
+              />
+            ))}
           </>
         )}
-      </div>
 
+      </div>
     </div>
   );
 }
