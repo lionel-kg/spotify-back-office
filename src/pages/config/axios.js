@@ -9,7 +9,6 @@ const instance = axios.create({
   },
 });
 
-// Intercept outgoing requests
 instance.interceptors.request.use(
   config => {
     return config;
@@ -41,18 +40,6 @@ instance.interceptors.response.use(
       console.log('test3');
       toast.error('Internal server error');
     }
-    return Promise.reject(error);
-  },
-);
-
-instance.interceptors.request.use(
-  config => {
-    if (config.method !== 'get' && config.data instanceof FormData) {
-      config.headers['Content-Type'] = 'multipart/form-data';
-    }
-    return config;
-  },
-  error => {
     return Promise.reject(error);
   },
 );

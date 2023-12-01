@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 import axios from '../../config/axios';
 
 const Index = () => {
-  const [songForm, setSongForm] = useState({title: '', audioFile: null});
+  const [audioForm, setAudioForm] = useState({title: '', audioFile: null});
   const [data, setData] = useState({});
   const [artist, setArtist] = useState({});
   const [loadingData, setLoadingData] = useState(true);
@@ -16,23 +16,24 @@ const Index = () => {
   const [album, setAlbum] = useState({});
   const [audio, setAudio] = useState({});
 
-  const handleInput = e => {
-    setSongForm({...songForm, [e.target.name]: e.target.value});
-  };
-
   const handleFileChange = e => {
-    setSongForm({...songForm, audioFile: e.target.files[0]});
+    setAudioForm({...audioForm, audioFile: e.target.files[0]});
   };
 
-  const submitSong = async e => {
+  const submitAudio = async e => {
     e.preventDefault();
 
     try {
       const formData = new FormData();
-      formData.append('file', songForm.audioFile);
+      formData.append('file', audioForm.audioFile);
       const response = await axios.post(
         'http://localhost:4001/audio/upload',
         formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       );
       setData(response.data);
       setLoadingData(false);
@@ -116,9 +117,9 @@ const Index = () => {
         console.log(metaData);
         const bodyAudio = {
           title: metaData.title,
+          url: audio.url,
           artistId: artist.id,
           albumId: album.id,
-          url: audio.url,
         };
         console.log(bodyAudio);
         try {
@@ -141,7 +142,7 @@ const Index = () => {
   return (
     <div>
       <PageTitle title="Ajouter une musique" />
-      <form className={styles.form} onSubmit={submitSong}>
+      <form className={styles.form} onSubmit={submitAudio}>
         <div className={styles.form_container}>
           <div className={styles.form_fields}>
             <Input
