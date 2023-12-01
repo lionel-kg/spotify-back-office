@@ -45,4 +45,16 @@ instance.interceptors.response.use(
   },
 );
 
+instance.interceptors.request.use(
+  config => {
+    if (config.method !== 'get' && config.data instanceof FormData) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
+
 export default instance;
