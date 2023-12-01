@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import styles from "./index.module.scss";
-import PageTitle from "../../components/PageTitle";
-import Card from "../../components/Card";
+import React, {useState, useEffect} from 'react';
+import styles from './index.module.scss';
+import PageTitle from '../../components/PageTitle';
+import Card from '../../components/Card';
 import axios from 'axios'; // Import axios
-import { getAlbums } from '@/services/album.service';
+import {getAlbums} from '@/services/album.service';
 
 const Index = () => {
   const [search, setSearch] = useState('');
@@ -24,20 +24,18 @@ const Index = () => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
-
     getAlbums().then(res => {
       setAlbums(res);
-    })
+    });
   }, []);
 
   useEffect(() => {
     if (search.length > 0) {
       setIsLoading(true);
 
-      const albumResults = albums.filter((album) =>
-        album.title.toLowerCase().includes(search.toLowerCase())
+      const albumResults = albums.filter(album =>
+        album.title.toLowerCase().includes(search.toLowerCase()),
       );
 
       const delay = setTimeout(() => {
@@ -53,7 +51,7 @@ const Index = () => {
     }
   }, [search, albums]);
 
-  const handleSearch = (e) => {
+  const handleSearch = e => {
     setSearch(e.target.value);
   };
 
@@ -61,7 +59,13 @@ const Index = () => {
     <div>
       <div className={styles.header}>
         <PageTitle title="Albums" />
-        <input placeholder="Rechercher" onChange={(e) => { handleSearch(e); }} value={search} />
+        <input
+          placeholder="Rechercher"
+          onChange={e => {
+            handleSearch(e);
+          }}
+          value={search}
+        />
       </div>
       <div className={styles.albums_container}>
         {search ? (
@@ -74,7 +78,7 @@ const Index = () => {
                   <p>Pas de résultats</p>
                 ) : (
                   <>
-                    {filteredAlbums.map((album) => (
+                    {filteredAlbums.map(album => (
                       <Card
                         key={album.id}
                         name={album.title}
@@ -89,7 +93,7 @@ const Index = () => {
           </>
         ) : (
           <>
-            {albums.map((album) => (
+            {albums.map(album => (
               <Card
                 key={album.id}
                 name={album.title}
@@ -99,10 +103,9 @@ const Index = () => {
             ))}
           </>
         )}
-
       </div>
     </div>
   );
-}
+};
 
 export default Index;
