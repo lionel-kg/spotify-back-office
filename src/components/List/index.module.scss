@@ -1,12 +1,10 @@
 .list {
     &_item {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-        margin: 5px 0;
-
-        &_actions {
-            margin-left: auto;
-        }
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 50px;
+        gap: 50px;
+        flex-wrap: wrap;
     }
 }

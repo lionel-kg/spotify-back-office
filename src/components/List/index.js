@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 
 import {FaPen} from 'react-icons/fa';
 import {MdDelete} from 'react-icons/md';
+import CardArtist from '../CardArtist/index.js';
 
 const Index = props => {
   const {items, setShow, deleteFunction, setSelectedItem} = props;
@@ -14,29 +15,16 @@ const Index = props => {
 
   return (
     <div className={styles.list_container}>
-      {listItems.length > 0 &&
-        listItems.map(item => (
-          <div key={item.id} className={styles.list_item}>
-            <p>{item.name}</p>
-            <div className={styles.list_item_actions + ' ' + styles.flex_row}>
-              <div className={'customPadding'}>
-                <FaPen
-                  onClick={() => {
-                    setSelectedItem(item);
-                    setShow(true);
-                  }}
-                />
-              </div>
-              <div className={'customPadding'}>
-                <MdDelete
-                  onClick={() => {
-                    deleteFunction(item.id);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className={styles.list_item}>
+        {listItems.length > 0 &&
+          listItems.map(item => (
+            <CardArtist
+              artist={item}
+              setSelectedItem={setSelectedItem}
+              setShow={setShow}
+              deleteFunction={deleteFunction}></CardArtist>
+          ))}
+      </div>
     </div>
   );
 };

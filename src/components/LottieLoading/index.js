@@ -1,4 +1,5 @@
 import React, {useEffect, useRef} from 'react';
+import styles from './index.module.scss';
 
 const Index = ({loop = true}) => {
   const animationContainer = useRef(null);
@@ -22,7 +23,7 @@ const Index = ({loop = true}) => {
     }
   }, [loop]);
 
-  return <div ref={animationContainer} />;
+  return <div ref={animationContainer} className={styles.loading} />;
 };
 
 export default Index;

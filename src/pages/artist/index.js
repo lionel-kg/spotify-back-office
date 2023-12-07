@@ -20,6 +20,13 @@ const Index = () => {
     });
   }, []);
 
+  const deleteById = id => {
+    deleteArtist(id).then(response => {
+      console.log(response);
+      setArtists(response);
+    });
+  };
+
   return (
     <div>
       <PageTitle title="Artistes" />
@@ -28,7 +35,7 @@ const Index = () => {
         setShow={setShow}
         setTitle={setTitle}
         setArtists={setArtists}
-        deleteFunction={deleteArtist}
+        deleteFunction={deleteById}
         setSelectedItem={setSelectedArtist}
       />
       {show ? (

@@ -33,6 +33,7 @@ export const updateArtist = async (id, formData) => {
 export const deleteArtist = async id => {
   try {
     const response = await axios.delete(`http://localhost:4001/artist/${id}`);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw error;
