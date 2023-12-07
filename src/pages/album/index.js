@@ -74,6 +74,7 @@ const Index = () => {
                     name={album.title}
                     subtitle={album.artist?.name}
                     href={`album/update/${album.id}`}
+                    thumbnail={album.thumbnail}
                   />
                 ))}
               </>
@@ -90,6 +91,7 @@ const Index = () => {
                   name={album.title}
                   subtitle={album.artist?.name}
                   href={`album/update/${album.id}`}
+                  thumbnail={album.thumbnail}
                 />
               </Suspense>
             ))}

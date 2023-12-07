@@ -103,8 +103,7 @@ const Index = ({ data }) => {
       const audioResponse = await audioService.uploadAudio(formData);
       // Use the callback function to ensure that you're working with the latest state
       setListItems(prevList => [...prevList, audioResponse.audio]);
-      setAudio(audioResponse.data);
-      console.log(audioResponse.audio);
+      
       setLoading(false);
     } catch (error) {
       console.error('Error uploading audio file:', error);
@@ -119,7 +118,7 @@ const Index = ({ data }) => {
 
   return (
     <div className={styles.album}>
-      <AlbumBanner title={data.title} artist={data.artist.name} />
+      <AlbumBanner title={data.title} artist={data.artist.name} image={data.thumbnail} />
 
       <div className={styles.actions}>
 

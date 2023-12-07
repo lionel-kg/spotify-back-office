@@ -99,7 +99,7 @@ const Index = () => {
         title: album.title,
         artistId: album.artistId,
         thumbnail: 'https://i.pinimg.com/originals/71/28/3b/71283bb49db55cfee5bb6acd1389c465.jpg',
-        audios: listItems,
+        audio: listItems,
       };
 
       console.log(updatedAlbum);
