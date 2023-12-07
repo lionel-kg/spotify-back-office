@@ -4,6 +4,7 @@ import PageTitle from '../../components/PageTitle';
 import Card from '../../components/Card';
 import axios from 'axios'; // Import axios
 import {getAlbums} from '@/services/album.service';
+import LottieLoading from '../../components/LottieLoading/index';
 
 const Index = () => {
   const [search, setSearch] = useState('');
@@ -71,7 +72,9 @@ const Index = () => {
         {search ? (
           <>
             {isLoading ? (
-              <div className={styles.spinner}></div>
+              <div className={'loader_container'}>
+                <LottieLoading className={'loader'} />
+              </div>
             ) : (
               <>
                 {filteredAlbums.length === 0 ? (
@@ -82,6 +85,7 @@ const Index = () => {
                       <Card
                         key={album.id}
                         name={album.title}
+                        thumbnail={album.thumbnail}
                         subtitle={album.artist?.name}
                         onClick={album.onClick}
                       />
@@ -97,6 +101,7 @@ const Index = () => {
               <Card
                 key={album.id}
                 name={album.title}
+                thumbnail={album.thumbnail}
                 subtitle={album.artist?.name}
                 href={`album/update/${album.id}`}
               />

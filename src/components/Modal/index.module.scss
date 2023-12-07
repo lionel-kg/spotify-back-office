@@ -1,0 +1,40 @@
+.page {
+  &_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgb(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    z-index: 99099;
+  }
+  &_modal {
+    padding: 15px;
+    z-index: 10000;
+    background-color: white;
+    border: gray 1px solid;
+    border-radius: 3%;
+    color: black;
+    position: fixed;
+    width: 400px;
+    left: 50%;
+    top: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+.container {
+  width: 100%;
+  &_title {
+    width: 100%;
+  }
+  &_close {
+    position: absolute;
+    top: 4%;
+    right: 2%;
+    text-align: center;
+    cursor: pointer;
+    width: 10%;
+    margin: auto;
+  }
+}

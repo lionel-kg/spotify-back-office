@@ -1,10 +1,11 @@
-@import '../../styles/helpers/variables';
+@import "../../styles/helpers/variables";
 
 .card {
   background-color: $background-card;
   padding: 20px 15px;
   border-radius: 15px;
   color: $white;
+  width: 150px;
   img {
     width: 100%;
   }

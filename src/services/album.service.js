@@ -34,3 +34,12 @@ export const updateAlbum = async (id, formData) => {
     throw error;
   }
 };
+
+export const deleteAlbum = async id => {
+  try {
+    const response = await axios.delete(`http://localhost:4001/album/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

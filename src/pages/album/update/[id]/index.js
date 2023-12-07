@@ -135,13 +135,14 @@ const Index = ({data}) => {
   };
 
   useEffect(() => {
+    console.log(data);
     setListItems(data.audios);
   }, [data]);
 
   return (
     <div className={styles.album}>
       <div className={styles.banner}>
-        <Image src="/album.jpg" alt="logo" width={250} height={250} />
+        <Image src={data.thumbnail} alt="logo" width={250} height={250} />
         <div className={styles.banner_content}>
           <p>Album</p>
           <h1>{data.title}</h1>

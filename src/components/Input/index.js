@@ -15,6 +15,7 @@ const Index = props => {
         onChange={props.onChange}
         ref={props.inputRef}
         required={props.required}
+        defaultValue={props.defaultValue}
       />
     </div>
   );

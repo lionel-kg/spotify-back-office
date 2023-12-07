@@ -1,11 +1,11 @@
-.list{
-    &_item{
+.list {
+    &_item {
         display: flex;
         align-items: center;
         padding: 10px 0;
         margin: 5px 0;
 
-        &_actions{
+        &_actions {
             margin-left: auto;
         }
     }
