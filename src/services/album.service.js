@@ -42,4 +42,4 @@ export const deleteAlbum = async id => {
   } catch (error) {
     throw error;
   }
-};
+}

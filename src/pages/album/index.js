@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import styles from './index.module.scss';
 import PageTitle from '../../components/PageTitle';
-import Card from '../../components/Card';
+import Header from '@/components/Header';
 import axios from 'axios'; // Import axios
-import {getAlbums} from '@/services/album.service';
-import LottieLoading from '../../components/LottieLoading/index';
+import { getAlbums } from '@/services/album.service';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+const Album = lazy(() => import("@/components/Card"));
 
 const Index = () => {
   const [search, setSearch] = useState('');
@@ -15,33 +18,26 @@ const Index = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4001/album/');
-        setAlbums(response.data);
+        const data = await getAlbums();
+        setAlbums(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error(error);
       }
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    getAlbums().then(res => {
-      setAlbums(res);
-    });
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (search.length > 0) {
       setIsLoading(true);
-
       const albumResults = albums.filter(album =>
         album.title.toLowerCase().includes(search.toLowerCase()),
       );
 
       const delay = setTimeout(() => {
-        setIsLoading(false);
         setFilteredAlbums(albumResults);
+        setIsLoading(false);
       }, 500);
 
       return () => clearTimeout(delay);
@@ -52,59 +48,50 @@ const Index = () => {
     }
   }, [search, albums]);
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
   return (
     <div>
-      <div className={styles.header}>
-        <PageTitle title="Albums" />
-        <input
-          placeholder="Rechercher"
-          onChange={e => {
-            handleSearch(e);
-          }}
-          value={search}
-        />
-      </div>
+      <Header
+        pageTitle="Albums"
+        buttonTitle="Ajouter un album"
+        href="album/add"
+        onChange={e => {
+          handleSearch(e);
+        }}
+        value={search}
+      />
       <div className={styles.albums_container}>
         {search ? (
           <>
-            {isLoading ? (
-              <div className={'loader_container'}>
-                <LottieLoading className={'loader'} />
-              </div>
-            ) : (
+            {filteredAlbums.length > 0 ? (
               <>
-                {filteredAlbums.length === 0 ? (
-                  <p>Pas de résultats</p>
-                ) : (
-                  <>
-                    {filteredAlbums.map(album => (
-                      <Card
-                        key={album.id}
-                        name={album.title}
-                        thumbnail={album.thumbnail}
-                        subtitle={album.artist?.name}
-                        onClick={album.onClick}
-                      />
-                    ))}
-                  </>
-                )}
+                {filteredAlbums.map(album => (
+                  <Album
+                    key={album.id}
+                    name={album.title}
+                    subtitle={album.artist?.name}
+                    href={`album/update/${album.id}`}
+                  />
+                ))}
               </>
+
+            ) : (
+              !isLoading ? 'Pas de résultats' : null
             )}
           </>
         ) : (
           <>
-            {albums.map(album => (
-              <Card
-                key={album.id}
-                name={album.title}
-                thumbnail={album.thumbnail}
-                subtitle={album.artist?.name}
-                href={`album/update/${album.id}`}
-              />
+            {albums?.map(album => (
+              <Suspense key={album.id} fallback={'loading...'}>
+                <Album
+                  name={album.title}
+                  subtitle={album.artist?.name}
+                  href={`album/update/${album.id}`}
+                />
+              </Suspense>
             ))}
           </>
         )}

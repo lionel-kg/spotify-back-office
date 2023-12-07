@@ -7,8 +7,10 @@ import {useState} from 'react';
 import Modal from '../../components/Modal/index';
 import EditArtist from '../../components/Form/artist/edit/index';
 import {deleteArtist} from '@/services/artist.service';
+import Header from '@/components/Header';
 
 const Index = () => {
+  const [search, setSearch] = useState('');
   const [artists, setArtists] = useState({});
   const [show, setShow] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState({});
@@ -29,7 +31,15 @@ const Index = () => {
 
   return (
     <div>
-      <PageTitle title="Artistes" />
+      <Header
+        pageTitle="Artistes"
+        buttonTitle="Ajouter un artist"
+        href="artist/add"
+        onChange={e => {
+          handleSearch(e);
+        }}
+        value={search}
+      />
       <List
         items={artists}
         setShow={setShow}

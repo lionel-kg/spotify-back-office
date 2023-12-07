@@ -1,18 +1,26 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './index.module.scss';
-import {getAlbumById, updateAlbum} from '@/services/album.service';
+import { getAlbumById, updateAlbum, deleteAlbum } from '@/services/album.service';
 import Image from 'next/image';
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import axios from 'axios'; // Import axios
+import { useRouter } from 'next/router';
+import { resetServerContext } from 'react-beautiful-dnd';
+import audioService from '@/services/audio.service';
+
+//Components
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import axios from 'axios'; // Import axios
-import {useRouter} from 'next/router';
-import {resetServerContext} from 'react-beautiful-dnd';
+import AlbumBanner from '@/components/AlbumBanner';
+import AudioList from '@/components/AudioList';
+import LottieLoading from '@/components/LottieLoading/index';
+import ButtonAddAudio from '@/components/ButtonAddAudio';
 
 export async function getServerSideProps(context) {
-  const {id} = await context.query;
+  resetServerContext()
+  const { id } = await context.query;
   const data = await getAlbumById(id).then(res => {
-    return {data: res}; // Envelopper les données dans la clé "data"
+    return { data: res }; // Envelopper les données dans la clé "data"
   });
   return {
     props: data,
@@ -26,42 +34,37 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const grid = 8;
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  userSelect: 'none',
-  padding: '10px 0',
-  margin: '5px 0',
-  ...draggableStyle,
-});
-
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? '' : '',
-  padding: grid,
-  width: 250,
-});
-
-const Index = ({data}) => {
-  resetServerContext();
-
-  const inputRef = useRef(null); // Create a ref to the file input
-
-  // ... (other code)
-
-  const handleButtonClick = () => {
-    // Trigger the file input click when the button is clicked
-    inputRef.current.click();
-  };
+const Index = ({ data }) => {
+  const router = useRouter();
+  const inputRef = useRef(null);
 
   const [listItems, setListItems] = useState(data.audios);
-  const [audioForm, setAudioForm] = useState({title: '', audioFile: null});
-  const [file, setFile] = useState({});
-  const [loadingData, setLoadingData] = useState(true);
+  const [audioForm, setAudioForm] = useState({ title: '', audioFile: null });
   const [artist, setArtist] = useState({});
   const [audio, setAudio] = useState({});
-  const [loadingAudio, setLoadingAudio] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    await deleteAlbum(data.id);
+    router.push('/album');
+  }
+
+  const handleAddAudio = async (audioFile) => {
+    setAudioForm({ audioFile });
+  };
+
+  useEffect(() => {
+    if (audioForm.audioFile) {
+      submitAudio();
+    }
+
+    return
+  }, [audioForm.audioFile]);
+
 
   const onDragEnd = async result => {
+    setLoading(true);
     if (!result.destination) {
       return;
     }
@@ -79,58 +82,33 @@ const Index = ({data}) => {
     };
 
     try {
-      console.log(updatedAlbum);
       const response = await axios.put(
         `http://localhost:4001/album/${data.id}`,
         updatedAlbum,
       );
-
-      console.log(response.data);
       setListItems(updatedItems);
+      setLoading(false);
     } catch (error) {
       console.error('Error updating album:', error);
     }
   };
 
-  const handleFileChange = e => {
-    setAudioForm({...audioForm, audioFile: e.target.files[0]});
-  };
 
   const submitAudio = async e => {
-    e.preventDefault();
-
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append('file', audioForm.audioFile);
-      console.log(formData);
-      const uploadResponse = await axios.post(
-        `http://localhost:4001/audio/upload/`,
-        formData,
-      );
-      setLoadingData(false);
-
-      const metaData = uploadResponse.data.metaData;
-      const bodyAudio = {
-        title: metaData.title,
-        artistId: data.artist.id,
-        albumId: data.id,
-        url: uploadResponse.data.audio.url,
-      };
-
-      const audioResponse = await axios.post(
-        'http://localhost:4001/audio',
-        bodyAudio,
-      );
-
-      console.log(audioResponse.data);
-
+      formData.append('albumId', data.id);
+      const audioResponse = await audioService.uploadAudio(formData);
       // Use the callback function to ensure that you're working with the latest state
-      setListItems(prevList => [...prevList, audioResponse.data]);
-
+      setListItems(prevList => [...prevList, audioResponse.audio]);
       setAudio(audioResponse.data);
-      setLoadingAudio(false);
+      console.log(audioResponse.audio);
+      setLoading(false);
     } catch (error) {
       console.error('Error uploading audio file:', error);
+      setLoading(false);
     }
   };
 
@@ -141,66 +119,20 @@ const Index = ({data}) => {
 
   return (
     <div className={styles.album}>
-      <div className={styles.banner}>
-        <Image src={data.thumbnail} alt="logo" width={250} height={250} />
-        <div className={styles.banner_content}>
-          <p>Album</p>
-          <h1>{data.title}</h1>
-          <div className={styles.banner_description}>
-            <p>{data.artist.name}</p>
-          </div>
-        </div>
-      </div>
+      <AlbumBanner title={data.title} artist={data.artist.name} />
 
       <div className={styles.actions}>
-        <form className={styles.form} onSubmit={submitAudio}>
-          <div>
-            <Input
-              required={true}
-              label="Audio File"
-              type="file"
-              name="audioFile"
-              onChange={handleFileChange}
-              inputRef={inputRef}
-            />
-          </div>
-          <Button title="Ajouter une musique" onClick={handleButtonClick} />
-        </form>
-      </div>
 
-      <div className={styles.audio}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided, snapshot) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                styles={getListStyle(snapshot.isDraggingOver)}>
-                {listItems.map((item, index) => (
-                  <Draggable
-                    key={item.id}
-                    draggableId={item.id.toString()}
-                    index={index}>
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={getItemStyle(
-                          snapshot.isDragging,
-                          provided.draggableProps.style,
-                        )}>
-                        {index + 1}
-                        {item.title}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <ButtonAddAudio onAddAudio={handleAddAudio} />
+        <Button title="Supprimer l'album" onClick={handleDelete} />
+
+      </div>
+      <div>
+        {loading ? (
+          <LottieLoading />
+        ) : (
+          <AudioList listItems={listItems} onDragEnd={onDragEnd} />
+        )}
       </div>
     </div>
   );
