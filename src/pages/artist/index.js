@@ -50,7 +50,11 @@ const Index = () => {
       />
       {show ? (
         <Modal title={selectedArtist.name} show={show} setShow={setShow}>
-          <EditArtist artist={selectedArtist} setArtists={setArtists} />
+          <EditArtist
+            artist={selectedArtist}
+            setArtists={setArtists}
+            setShow={setShow}
+          />
         </Modal>
       ) : (
         <></>

@@ -1,0 +1,42 @@
+// index.module.scss
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+
+    li {
+      margin: 0 5px;
+
+      a,
+      span {
+        display: block;
+        padding: 8px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+
+        &:focus {
+          outline: none;
+          background-color: #e0e0e0;
+        }
+      }
+
+      span {
+        background-color: #007bff;
+        color: #fff;
+      }
+    }
+  }
+}

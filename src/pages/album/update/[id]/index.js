@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styles from './index.module.scss';
-import { getAlbumById, updateAlbum, deleteAlbum } from '@/services/album.service';
+import {getAlbumById, updateAlbum, deleteAlbum} from '@/services/album.service';
 import Image from 'next/image';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import axios from 'axios'; // Import axios
-import { useRouter } from 'next/router';
-import { resetServerContext } from 'react-beautiful-dnd';
+import {useRouter} from 'next/router';
+import {resetServerContext} from 'react-beautiful-dnd';
 import audioService from '@/services/audio.service';
 
 //Components
@@ -17,10 +17,10 @@ import LottieLoading from '@/components/LottieLoading/index';
 import ButtonAddAudio from '@/components/ButtonAddAudio';
 
 export async function getServerSideProps(context) {
-  resetServerContext()
-  const { id } = await context.query;
+  resetServerContext();
+  const {id} = await context.query;
   const data = await getAlbumById(id).then(res => {
-    return { data: res }; // Envelopper les données dans la clé "data"
+    return {data: res}; // Envelopper les données dans la clé "data"
   });
   return {
     props: data,
@@ -34,34 +34,42 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const Index = ({ data }) => {
+const Index = ({data}) => {
   const router = useRouter();
   const inputRef = useRef(null);
+  const {id} = router.query;
 
+  const [album, setAlbum] = useState({});
   const [listItems, setListItems] = useState(data.audios);
-  const [audioForm, setAudioForm] = useState({ title: '', audioFile: null });
+  const [audioForm, setAudioForm] = useState({title: '', audioFile: null});
   const [artist, setArtist] = useState({});
   const [audio, setAudio] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = async (e) => {
+  const handleDelete = async e => {
     e.preventDefault();
     await deleteAlbum(data.id);
     router.push('/album');
-  }
-
-  const handleAddAudio = async (audioFile) => {
-    setAudioForm({ audioFile });
   };
+
+  const handleAddAudio = async audioFile => {
+    setAudioForm({audioFile});
+  };
+
+  useEffect(() => {
+    getAlbumById(id).then(album => {
+      setAlbum(album);
+      console.log(album);
+    });
+  }, [id]);
 
   useEffect(() => {
     if (audioForm.audioFile) {
       submitAudio();
     }
 
-    return
+    return;
   }, [audioForm.audioFile]);
-
 
   const onDragEnd = async result => {
     setLoading(true);
@@ -93,7 +101,6 @@ const Index = ({ data }) => {
     }
   };
 
-
   const submitAudio = async e => {
     setLoading(true);
     try {
@@ -103,7 +110,7 @@ const Index = ({ data }) => {
       const audioResponse = await audioService.uploadAudio(formData);
       // Use the callback function to ensure that you're working with the latest state
       setListItems(prevList => [...prevList, audioResponse.audio]);
-      
+
       setLoading(false);
     } catch (error) {
       console.error('Error uploading audio file:', error);
@@ -118,13 +125,15 @@ const Index = ({ data }) => {
 
   return (
     <div className={styles.album}>
-      <AlbumBanner title={data.title} artist={data.artist.name} image={data.thumbnail} />
+      <AlbumBanner
+        title={data.title}
+        artist={data.artist.name}
+        image={data.thumbnail}
+      />
 
       <div className={styles.actions}>
-
         <ButtonAddAudio onAddAudio={handleAddAudio} />
         <Button title="Supprimer l'album" onClick={handleDelete} />
-
       </div>
       <div>
         {loading ? (

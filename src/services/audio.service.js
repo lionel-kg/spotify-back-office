@@ -14,6 +14,16 @@ const uploadAudio = async formData => {
   }
 };
 
+export const getAudiosPagination = async page => {
+  try {
+    const response = await axios.get('/audio/pagination?page=' + page);
+    return response.data;
+  } catch (error) {
+    console.error('Error getting', error);
+    throw error;
+  }
+};
+
 export default {
   uploadAudio,
 };
