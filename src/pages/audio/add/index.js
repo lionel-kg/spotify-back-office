@@ -3,7 +3,7 @@ import Input from '../../../components/Input';
 import PageTitle from '../../../components/PageTitle';
 import Button from '../../../components/Button';
 import styles from './index.module.scss';
-import audioService from '../../../services/audio.service';
+import {uploadAudio} from '../../../services/audio.service';
 import LottieLoading from '../../../components/LottieLoading/index';
 
 const Index = () => {
@@ -21,7 +21,7 @@ const Index = () => {
     try {
       const formData = new FormData();
       formData.append('file', audioForm.audioFile);
-      const response = await audioService.uploadAudio(formData);
+      const response = await uploadAudio(formData);
       setData(response);
       setLoading(false);
     } catch (error) {
