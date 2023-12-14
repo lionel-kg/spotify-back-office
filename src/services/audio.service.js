@@ -14,7 +14,7 @@ const uploadAudio = async formData => {
   }
 };
 
-export const getAudiosPagination = async page => {
+const getAudiosPagination = async page => {
   try {
     const response = await axios.get('/audio/pagination?page=' + page);
     return response.data;
@@ -24,6 +24,13 @@ export const getAudiosPagination = async page => {
   }
 };
 
-export default {
-  uploadAudio,
+const deleteAudio = async id => {
+  try {
+    const response = await axios.delete('/audio/' + id);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
+
+export {uploadAudio, getAudiosPagination, deleteAudio};

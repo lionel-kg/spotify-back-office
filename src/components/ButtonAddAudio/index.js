@@ -1,17 +1,18 @@
-import React, { useRef } from 'react';
+import React, {useRef} from 'react';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import styles from './index.module.scss';
-const Index = ({ onAddAudio }) => {
+const Index = ({onAddAudio}) => {
   const inputRef = useRef(null);
 
-  const addAudio = (e) => {
+  const addAudio = e => {
     e.preventDefault();
     inputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = e => {
     e.preventDefault();
+    console.log(e.target.files[0]);
     onAddAudio(e.target.files[0]);
   };
 
