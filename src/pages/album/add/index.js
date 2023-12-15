@@ -1,10 +1,10 @@
-import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styles from './index.module.scss';
 import axios from 'axios';
-import {getArtists} from '@/services/artist.service';
-import {useRouter} from 'next/router';
+import { getArtists } from '@/services/artist.service';
+import { useRouter } from 'next/router';
 
-import {uploadAudio} from '@/services/audio.service';
+import { uploadAudio } from '@/services/audio.service';
 // Components
 import PageTitle from '../../../components/PageTitle';
 import Button from '../../../components/Button';
@@ -12,6 +12,7 @@ import Input from '../../../components/Input';
 import ButtonAddAudio from '@/components/ButtonAddAudio';
 import AudioList from '@/components/AudioList';
 import Loading from '@/components/Loading';
+import { Akatab, Alumni_Sans } from 'next/font/google';
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -24,7 +25,7 @@ const Index = () => {
   const router = useRouter();
 
   const [listItems, setListItems] = useState([]);
-  const [audioForm, setAudioForm] = useState({title: '', audioFile: null});
+  const [audioForm, setAudioForm] = useState({ title: '', audioFile: null });
   const [album, setAlbum] = useState({});
   const [artists, setArtists] = useState([]);
   const [selectedArtist, setSelectedArtist] = useState('');
@@ -66,7 +67,7 @@ const Index = () => {
   );
 
   const handleAddAudio = useCallback(async audioFile => {
-    setAudioForm({audioFile});
+    setAudioForm({ audioFile });
   }, []);
 
   useEffect(() => {
@@ -92,15 +93,45 @@ const Index = () => {
     }
   }, [audioForm.audioFile]);
 
+  // File uploader
+  const handleUploadInput = (e) => {
+    const files = [...e.target.files];
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append("file", file);
+    }
+
+    formData.append("folder", "image");
+    formData.append("upload_preset", "ml_default");
+
+    const res = fetch(
+      "https://api.cloudinary.com/v1_1/dud2dnggu/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    ).then(res => {
+      res.json().then(data => {
+        // Assuming data.secure_url is the URL of the uploaded image
+        const uploadedThumbnailUrl = data.secure_url;
+        console.log(data);
+        // Update the form state with the new thumbnail URL
+        setAlbum({
+          thumbnail: uploadedThumbnailUrl,
+        });
+      });
+    })
+  };
+
   const submitAlbum = useCallback(
     async e => {
       e.preventDefault();
       try {
+        // Step 1: Create the album
         const updatedAlbum = {
           title: album.title,
           artistId: album.artistId,
-          thumbnail:
-            'https://i.pinimg.com/originals/71/28/3b/71283bb49db55cfee5bb6acd1389c465.jpg',
+          thumbnail: album.thumbnail,
           audio: listItems,
         };
 
@@ -111,8 +142,8 @@ const Index = () => {
 
         const albumId = albumResponse.data.id;
 
-        const updateAudioPromises = listItems.map(async audio => {
-          const updatedAudio = {...audio, albumId: albumId};
+        const updateAudioPromises = listItems.map(async (audio) => {
+          const updatedAudio = { ...audio, albumId: albumId };
           return axios.put(
             `http://localhost:4001/audio/${audio.id}`,
             updatedAudio,
@@ -182,6 +213,25 @@ const Index = () => {
               value={album.title || ''}
               onChange={e => handleInput(e)}
             />
+            <Input
+              label="Image"
+              type="file"
+              name="thumbnail"
+              multiple
+              inputValue={album.thumbnail}
+              onChange={(e) => {
+                handleUploadInput(e);
+              }}
+            />
+            {album.thumbnail ? (
+              <div className={styles.img_wrapper}>
+                <div className={styles.img_card}>
+                  <img width="200px" height="200px" src={album.thumbnail} loading="lazy" />
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
             <div className={styles.artist_select}>
               <label>Artiste</label>
               {renderedArtistsOptions}

@@ -5,9 +5,14 @@
   padding: 20px 15px;
   border-radius: 15px;
   color: $white;
-  width: 150px;
+  width: 100%;
+
   img {
-    width: 100%;
+    width: 200Px;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    border-radius: 10px;
   }
 
   .name {

@@ -21,13 +21,8 @@ export const getAlbumById = async id => {
 export const updateAlbum = async (id, formData) => {
   try {
     const response = await axios.put(
-      `http://localhost:4001/album/${id}`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
+      `/album/${id}`,
+      formData
     );
     return response.data;
   } catch (error) {

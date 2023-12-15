@@ -10,33 +10,25 @@
     height: 20px;
     border-radius: 50%;
     border-left-color: $primary-color;
-    animation: spin 0.8s linear infinite; /* Use linear timing function for a constant speed */
+    animation: spin 0.8s linear infinite;
+
+    /* Use linear timing function for a constant speed */
     @keyframes spin {
         0% {
             transform: rotate(0deg);
         }
+
         100% {
             transform: rotate(360deg);
         }
     }
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 50px;
-    input {
-        width: 50%;
-        padding: 0.5rem 1rem;
-        border-radius: 10px;
-        color: $black;
-    }
-}
+
 
 .albums_container {
-    position: relative;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+
+    grid-template-columns: repeat(auto-fill, 200px);
     gap: 50px;
 }
