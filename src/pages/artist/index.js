@@ -79,6 +79,7 @@ const Index = () => {
           <EditArtist
             artist={selectedArtist}
             setArtists={setArtists}
+            setFilteredArtists={setFilteredArtists}
             setShow={setShow}
           />
         </Modal>

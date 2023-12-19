@@ -6,7 +6,7 @@ import {updateArtist} from '../../../../services/artist.service';
 import styles from './index.module.scss';
 
 const Index = props => {
-  const {artist, setArtists, setShow} = props;
+  const {artist, setArtists, setShow, setFilteredArtists} = props;
   const [value, setValue] = useState({
     name: '',
   });
@@ -15,7 +15,9 @@ const Index = props => {
   };
   const update = () => {
     updateArtist(artist.id, value).then(res => {
+      console.log(res);
       setArtists(res);
+      setFilteredArtists(res);
       setShow(false);
     });
   };
