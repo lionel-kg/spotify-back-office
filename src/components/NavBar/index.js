@@ -48,21 +48,11 @@ const Index = () => {
           icon={<RxDashboard size={30} />}
         />
         <NavbarItem
-          link="/search"
-          title="Recherche"
-          icon={<BiSearchAlt size={30} />}
-        />
-        <NavbarItem
           link="/audio"
           title="Musiques"
           icon={<RiFileMusicLine size={30} />}
         />
         <NavbarItem link="/album" title="Albums" icon={<BiAlbum size={30} />} />
-        <NavbarItem
-          link="/playlist"
-          title="Playlists"
-          icon={<BiSolidPlaylist size={30} />}
-        />
         <NavbarItem
           link="/artist"
           title="Artistes"
