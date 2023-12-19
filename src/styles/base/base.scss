@@ -4,6 +4,7 @@ html,
 body,
 #__next {
     height: 100%;
+    overflow: hidden;
 }
 
 .main {
@@ -11,14 +12,18 @@ body,
     grid-template-columns: auto 1fr;
     padding: 7.5px;
     height: 100%;
+    overflow: hidden;
+    background-color: black;
 }
 
 main {
+    color: white !important;
     padding: 25px;
+    background: linear-gradient(to bottom, #505050, #000000 90%);
+    overflow-y: auto;
 }
 
 .slick {
-
     &-track {
         margin-left: 0 !important;
         display: flex !important;

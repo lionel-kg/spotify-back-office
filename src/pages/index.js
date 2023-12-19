@@ -47,7 +47,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="card flex justify-content-center">
+    <div className="container_stat flex ">
       <DataTable
         value={stats}
         tableStyle={{minWidth: '20rem', overflow: 'hidden'}}>

@@ -1,6 +1,13 @@
+@import "../../styles/helpers/variables";
+
 .container_song {
   padding: 20px;
+
   .padding {
+    width: fit-content;
     padding: 10px;
+    border-radius: 20px;
+    background-color: $backgroundGrey;
+    margin: 10px;
   }
 }
