@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import styles from './index.module.scss';
-import { getAlbumById, updateAlbum, deleteAlbum } from '@/services/album.service';
+import {getAlbumById, updateAlbum, deleteAlbum} from '@/services/album.service';
 import Image from 'next/image';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { resetServerContext } from 'react-beautiful-dnd';
-import { uploadAudio } from '@/services/audio.service';
+import {useRouter} from 'next/router';
+import {resetServerContext} from 'react-beautiful-dnd';
+import {uploadAudio} from '@/services/audio.service';
 
 // Components
 import Button from '@/components/Button';
@@ -29,7 +29,6 @@ import AlbumEdit from '@/components/Form/Album/Edit';
 //   };
 // }
 
-
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -37,15 +36,15 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const Index = ({ }) => {
+const Index = ({}) => {
   const router = useRouter();
   const inputRef = useRef(null);
-  const { id } = router.query;
+  const {id} = router.query;
 
   const [album, setAlbum] = useState({});
   const [listItems, setListItems] = useState(album.audios);
-  const [audioForm, setAudioForm] = useState({ title: '', audioFile: null });
-  const [show, setShow] = useState(false)
+  const [audioForm, setAudioForm] = useState({title: '', audioFile: null});
+  const [show, setShow] = useState(false);
   const [artist, setArtist] = useState({});
   const [audio, setAudio] = useState({});
   const [loading, setLoading] = useState(false);
@@ -60,7 +59,7 @@ const Index = ({ }) => {
   );
 
   const handleAddAudio = useCallback(async audioFile => {
-    setAudioForm({ audioFile });
+    setAudioForm({audioFile});
   }, []);
 
   useEffect(() => {
@@ -92,12 +91,15 @@ const Index = ({ }) => {
 
       const updatedAlbum = {
         title: album.title,
-        artistId: album.artist.id,
+        artistId: album.artist?.id,
         audios: updatedItems,
       };
 
       try {
-        await axios.put(`http://localhost:4001/album/${album.id}`, updatedAlbum);
+        await axios.put(
+          `http://localhost:4001/album/${album.id}`,
+          updatedAlbum,
+        );
         setListItems(updatedItems);
         setLoading(false);
       } catch (error) {
@@ -160,11 +162,7 @@ const Index = ({ }) => {
       {show ? (
         <>
           <Modal title={album.title} show={show} setShow={setShow}>
-            <AlbumEdit
-              album={album}
-              setAlbum={setAlbum}
-              setShow={setShow}
-            />
+            <AlbumEdit album={album} setAlbum={setAlbum} setShow={setShow} />
           </Modal>
         </>
       ) : (
