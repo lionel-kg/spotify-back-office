@@ -3,7 +3,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from '@/styles/styles.scss';
 import {useRouter} from 'next/router';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/NavBar';
 import localFont from 'next/font/local';
 
 const myFont = localFont({src: '../../public/fonts/GothamMedium.ttf'});
