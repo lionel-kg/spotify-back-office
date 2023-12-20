@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'next-app',
+      name: 'back-office-spotify',
       script: './node_modules/next/dist/bin/next',
       args: 'start',
       env: {
