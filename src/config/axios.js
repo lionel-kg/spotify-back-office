@@ -1,8 +1,11 @@
 import axios from 'axios';
 import {toast} from 'react-toastify';
 
+//const url = "http://localhost:4001/";
+const url = 'https://api.spotify.ismadev.net/';
+
 const instance = axios.create({
-  baseURL: 'http://localhost:4001',
+  baseURL: url,
   timeout: 10000, // Timeout after 10 seconds
   headers: {
     'Content-Type': 'application/json',
