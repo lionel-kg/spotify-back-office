@@ -24,13 +24,12 @@
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: #f4f4f4;
+          background-color: $primary-color;
           color: black !important;
         }
 
         &:focus {
           outline: none;
-          background-color: #e0e0e0;
         }
       }
 

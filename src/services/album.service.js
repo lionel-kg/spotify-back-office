@@ -20,10 +20,7 @@ export const getAlbumById = async id => {
 
 export const updateAlbum = async (id, formData) => {
   try {
-    const response = await axios.put(
-      `/album/${id}`,
-      formData
-    );
+    const response = await axios.put(`/album/${id}`, formData);
     return response.data;
   } catch (error) {
     throw error;
@@ -37,4 +34,14 @@ export const deleteAlbum = async id => {
   } catch (error) {
     throw error;
   }
-}
+};
+
+export const getAlbumPagination = async page => {
+  try {
+    const response = await axios.get('/album/pagination?page=' + page);
+    return response.data;
+  } catch (error) {
+    console.error('Error getting', error);
+    throw error;
+  }
+};

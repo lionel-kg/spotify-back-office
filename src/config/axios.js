@@ -1,8 +1,7 @@
 import axios from 'axios';
 import {toast} from 'react-toastify';
 
-//const url = "http://localhost:4001/";
-// const url = 'https://api.spotify.ismadev.net/';
+const url = process.env.API_BASE_URL;
 
 const instance = axios.create({
   baseURL: process.env.API_BASE_URL,

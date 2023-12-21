@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import styles from './index.module.scss';
 
-const Index = props => {
+const Pagination = props => {
   const {currentPage, totalPages, onPageChange} = props;
   const [pages, setPages] = useState([]);
 
@@ -21,26 +21,46 @@ const Index = props => {
     <div className={styles.pagination}>
       {totalPages > 1 && (
         <ul>
-          {pages.map(page => (
-            <li key={page}>
-              {page === currentPage ? (
-                <span>{page}</span>
-              ) : (
-                <a
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    onPageChange(page);
-                  }}>
-                  {page}
-                </a>
-              )}
+          {currentPage > 1 && (
+            <li>
+              <a
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  onPageChange(currentPage - 1);
+                }}>
+                Précédent
+              </a>
             </li>
-          ))}
+          )}
+
+          <li key={currentPage} className={styles.currentPage}>
+            <a
+              href="#"
+              onClick={e => {
+                e.preventDefault();
+                onPageChange(currentPage);
+              }}>
+              {currentPage}
+            </a>
+          </li>
+
+          {currentPage < totalPages && (
+            <li>
+              <a
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  onPageChange(currentPage + 1);
+                }}>
+                Suivant
+              </a>
+            </li>
+          )}
         </ul>
       )}
     </div>
   );
 };
 
-export default Index;
+export default Pagination;
