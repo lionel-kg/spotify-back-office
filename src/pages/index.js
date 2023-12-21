@@ -33,14 +33,13 @@ export default function Home() {
       cutout: '60%',
     };
     getStat().then(stat => {
-      console.log(stat);
-
       data.labels.push(stat.numberOfSongs.label);
       data.labels.push(stat.numberOfAlbums.label);
+      data.labels.push(stat.numberOfArtists.label);
       data.datasets[0].data.push(stat.numberOfSongs.count);
       data.datasets[0].data.push(stat.numberOfAlbums.count);
-      setStats([stat.numberOfAlbums, stat.numberOfSongs]);
-      console.log(stats);
+      data.datasets[0].data.push(stat.numberOfArtists.count);
+      setStats([stat.numberOfAlbums, stat.numberOfSongs, stat.numberOfArtists]);
       setChartData(data);
       setChartOptions(options);
     });
