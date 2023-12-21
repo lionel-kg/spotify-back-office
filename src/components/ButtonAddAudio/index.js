@@ -12,7 +12,6 @@ const Index = ({onAddAudio}) => {
 
   const handleFileChange = e => {
     e.preventDefault();
-    console.log(e.target.files[0]);
     onAddAudio(e.target.files[0]);
   };
 

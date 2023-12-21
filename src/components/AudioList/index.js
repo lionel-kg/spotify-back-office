@@ -1,9 +1,9 @@
 // AudioList.js
-import React, { useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React, {useEffect} from 'react';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import styles from './index.module.scss';
-import { MdDelete } from 'react-icons/md';
-import { deleteAudio } from '@/services/audio.service';
+import {MdDelete} from 'react-icons/md';
+import {deleteAudio} from '@/services/audio.service';
 const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -19,15 +19,10 @@ const getListStyle = isDraggingOver => ({
   width: 250,
 });
 
-const AudioList = ({ listItems, setListItems, onDragEnd }) => {
-  useEffect(() => {
-    console.log(listItems);
-  }, []); // Ajout du crochet manquant
+const AudioList = ({listItems, setListItems, onDragEnd}) => {
   const removeAudio = id => {
     deleteAudio(id).then(album => {
-      console.log(album);
       setListItems(album.album.audios);
-      console.log(listItems);
     });
   };
   return (

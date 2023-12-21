@@ -29,8 +29,6 @@ const Index = () => {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      console.log(`File ${i + 1}:`);
-      console.log('File Name:', file.name);
     }
   };
 

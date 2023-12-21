@@ -11,10 +11,6 @@ const Index = props => {
     router.push(props.href);
   };
 
-  useEffect(() => {
-    console.log(thumbnail);
-  }, []);
-
   return (
     <div className={styles.card} onClick={e => handleCard(e)}>
       <img src={thumbnail} alt={name} />

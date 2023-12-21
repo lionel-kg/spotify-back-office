@@ -31,7 +31,6 @@ const Index = () => {
 
   const deleteById = useCallback(id => {
     deleteArtist(id).then(response => {
-      console.log(response);
       setArtists(response);
       setFilteredArtists(response);
     });

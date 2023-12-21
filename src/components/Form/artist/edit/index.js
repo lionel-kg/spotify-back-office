@@ -15,7 +15,6 @@ const Index = props => {
   };
   const update = () => {
     updateArtist(artist.id, value).then(res => {
-      console.log(res);
       setArtists(res);
       setFilteredArtists(res);
       setShow(false);
