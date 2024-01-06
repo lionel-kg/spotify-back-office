@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 import {getAlbumById, updateAlbum, deleteAlbum} from '@/services/album.service';
 import Image from 'next/image';
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
-import axios from 'axios';
+import axios from '@/config/axios';
 import {useRouter} from 'next/router';
 import {resetServerContext} from 'react-beautiful-dnd';
 import {uploadAudio} from '@/services/audio.service';
@@ -96,10 +96,7 @@ const Index = ({}) => {
       };
 
       try {
-        await axios.put(
-          `http://localhost:4001/album/${album.id}`,
-          updatedAlbum,
-        );
+        await axios.put(`/album/${album.id}`, updatedAlbum);
         setListItems(updatedItems);
         setLoading(false);
       } catch (error) {

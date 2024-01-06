@@ -29,7 +29,7 @@ export const updateAlbum = async (id, formData) => {
 
 export const deleteAlbum = async id => {
   try {
-    const response = await axios.delete(`http://localhost:4001/album/${id}`);
+    const response = await axios.delete(`/album/${id}`);
     return response.data;
   } catch (error) {
     throw error;

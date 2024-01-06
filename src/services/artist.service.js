@@ -2,7 +2,7 @@ import axios from '../config/axios';
 
 export const getArtists = async () => {
   try {
-    const response = await axios.get('http://localhost:4001/artist/');
+    const response = await axios.get('/artist/');
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export const getArtists = async () => {
 
 export const getArtistById = async id => {
   try {
-    const response = await axios.get(`http://localhost:4001/artist/${id}`);
+    const response = await axios.get(`/artist/${id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,10 +20,7 @@ export const getArtistById = async id => {
 
 export const updateArtist = async (id, formData) => {
   try {
-    const response = await axios.put(
-      `http://localhost:4001/artist/${id}`,
-      formData,
-    );
+    const response = await axios.put(`/artist/${id}`, formData);
     return response.data;
   } catch (error) {
     throw error;
@@ -32,7 +29,7 @@ export const updateArtist = async (id, formData) => {
 
 export const deleteArtist = async id => {
   try {
-    const response = await axios.delete(`http://localhost:4001/artist/${id}`);
+    const response = await axios.delete(`/artist/${id}`);
     return response.data;
   } catch (error) {
     throw error;

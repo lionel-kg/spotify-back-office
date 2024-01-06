@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import styles from './index.module.scss';
-import axios from 'axios';
+import axios from '@/config/axios';
 import {getArtists} from '@/services/artist.service';
 import {useRouter} from 'next/router';
 
@@ -134,19 +134,13 @@ const Index = () => {
           audio: listItems,
         };
 
-        const albumResponse = await axios.post(
-          'http://localhost:4001/album',
-          updatedAlbum,
-        );
+        const albumResponse = await axios.post('/album', updatedAlbum);
 
         const albumId = albumResponse.data.id;
 
         const updateAudioPromises = listItems.map(async audio => {
           const updatedAudio = {...audio, albumId: albumId};
-          return axios.put(
-            `http://localhost:4001/audio/${audio.id}`,
-            updatedAudio,
-          );
+          return axios.put(`/audio/${audio.id}`, updatedAudio);
         });
 
         await Promise.all(updateAudioPromises);
